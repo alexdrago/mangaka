@@ -15,7 +15,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * @ApiResource(
  *     normalizationContext={"groups"={"manga_listado:read"},"swagger_definition_name"="Lectura"},
  *     denormalizationContext={"groups"={"manga_listado:write"},"swagger_definition_name"="Escritura"},
- *     shortName="Mangas"
+ *     shortName="Mangas",
+ *     attributes={
+ *          "pagination_items_per_page"=10
+ *     }
  * )
  * @ORM\Entity(repositoryClass=MangaListRepository::class)
  * @ApiFilter(
@@ -56,6 +59,7 @@ class MangaList
 
     /**
      * Imagen de portada del manga
+     *
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"manga_listado:read","manga_listado:write"})
      */
