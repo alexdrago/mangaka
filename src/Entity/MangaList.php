@@ -39,7 +39,7 @@ class MangaList
     /**
      * Nombre del manga
      * @ORM\Column(type="string", length=255)
-     * @Groups({"manga_listado:read","manga_listado:write"})
+     * @Groups({"manga_listado:read","manga_listado:write","Categoria_listado:read"})
      */
     private $Nombre;
 
@@ -51,7 +51,7 @@ class MangaList
     private $Autor;
 
     /**
-     * Descripcion del manga
+     * Descripcion del manga.
      * @Groups({"manga_listado:read"})
      * @ORM\Column(type="string", length=400, nullable=true)
      */
@@ -64,6 +64,12 @@ class MangaList
      * @Groups({"manga_listado:read","manga_listado:write"})
      */
     private $Portada;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CategoriasList::class, inversedBy="mangaLists")
+     * @Groups({"manga_listado:read"})
+     */
+    private $Categoria;
 
     public function getId(): ?int
     {
@@ -140,6 +146,18 @@ class MangaList
     public function setPortada(?string $Portada): self
     {
         $this->Portada = $Portada;
+
+        return $this;
+    }
+
+    public function getCategoria(): ?CategoriasList
+    {
+        return $this->Categoria;
+    }
+
+    public function setCategoria(?CategoriasList $Categoria): self
+    {
+        $this->Categoria = $Categoria;
 
         return $this;
     }
