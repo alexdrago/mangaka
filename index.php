@@ -1,5 +1,5 @@
 <?php
-header("refresh: 5; https://mangaka.studio/public/index.php");
+header("refresh: 5; https://mangaka.studio/public");
 
 	echo '<title>Symfony3 Installed</title><div style="background: #e9ffed; border: 1px solid #b0dab7; padding: 15px;" align="center" >
 	<font size="5" color="#182e7a">Symfony3 is installed successfully.</font><br /><br />
