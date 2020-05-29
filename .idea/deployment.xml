@@ -5,7 +5,7 @@
       <paths name="Mangaka">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/domains/mangaka.studio/public_html" />
           </mappings>
         </serverdata>
       </paths>
