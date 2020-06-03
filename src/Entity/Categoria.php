@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\CategoriasListRepository;
+use App\Repository\CategoriasRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,10 +14,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"Categoria_listado:read"},"swagger_definition_name"="Lectura"},
  *     denormalizationContext={"groups"={"Categoria_listado:write"},"swagger_definition_name"="Escritura"},
  * )
- * @ORM\Entity(repositoryClass=CategoriasListRepository::class)
+ * @ORM\Entity(repositoryClass=CategoriasRepository::class)
 
  */
-class CategoriasList
+class Categoria
 {
     /**
      * @ORM\Id()
@@ -39,7 +39,7 @@ class CategoriasList
     private $Decripcion;
 
     /**
-     * @ORM\OneToMany(targetEntity=MangaList::class, mappedBy="Categoria")
+     * @ORM\OneToMany(targetEntity=Manga::class, mappedBy="Categoria")
      * @Groups({"Categoria_listado:read","Categoria_listado:write"})
      */
     private $mangaLists;
@@ -79,14 +79,14 @@ class CategoriasList
     }
 
     /**
-     * @return Collection|MangaList[]
+     * @return Collection|Manga[]
      */
     public function getMangaLists(): Collection
     {
         return $this->mangaLists;
     }
 
-    public function addMangaList(MangaList $mangaList): self
+    public function addMangaList(Manga $mangaList): self
     {
         if (!$this->mangaLists->contains($mangaList)) {
             $this->mangaLists[] = $mangaList;
@@ -96,7 +96,7 @@ class CategoriasList
         return $this;
     }
 
-    public function removeMangaList(MangaList $mangaList): self
+    public function removeMangaList(Manga $mangaList): self
     {
         if ($this->mangaLists->contains($mangaList)) {
             $this->mangaLists->removeElement($mangaList);

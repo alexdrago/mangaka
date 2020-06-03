@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\MangaList;
+use App\Entity\Manga;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method MangaList|null find($id, $lockMode = null, $lockVersion = null)
- * @method MangaList|null findOneBy(array $criteria, array $orderBy = null)
- * @method MangaList[]    findAll()
- * @method MangaList[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Manga|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Manga|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Manga[]    findAll()
+ * @method Manga[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MangaListRepository extends ServiceEntityRepository
+class MangaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MangaList::class);
+        parent::__construct($registry, Manga::class);
     }
 
     // /**
-    //  * @return MangaList[] Returns an array of MangaList objects
+    //  * @return Manga[] Returns an array of Manga objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class MangaListRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?MangaList
+    public function findOneBySomeField($value): ?Manga
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

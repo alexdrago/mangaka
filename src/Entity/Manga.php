@@ -5,7 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use App\Repository\MangaListRepository;
+use App\Repository\MangaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,13 +22,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *          "pagination_items_per_page"=10
  *     }
  * )
- * @ORM\Entity(repositoryClass=MangaListRepository::class)
+ * @ORM\Entity(repositoryClass=MangaRepository::class)
  * @ApiFilter(
  *     SearchFilter::class,
  *     properties={"Nombre":"partial",
  *     PropertyFilter::class})
  */
-class MangaList
+class Manga
 {
     /**
      * @ORM\Id()
@@ -68,13 +68,14 @@ class MangaList
     private $Portada;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CategoriasList::class, inversedBy="mangaLists")
+     * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="mangaLists")
      * @Groups({"manga_listado:read"})
      */
     private $Categoria;
 
     /**
-     * @ORM\OneToMany(targetEntity=CapitulosList::class, mappedBy="Manga", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Capitulo::class, mappedBy="Manga", orphanRemoval=true)
+     * @Groups({"manga_listado:read"})
      */
     private $Capitulos;
 
@@ -162,12 +163,12 @@ class MangaList
         return $this;
     }
 
-    public function getCategoria(): ?CategoriasList
+    public function getCategoria(): ?Categoria
     {
         return $this->Categoria;
     }
 
-    public function setCategoria(?CategoriasList $Categoria): self
+    public function setCategoria(?Categoria $Categoria): self
     {
         $this->Categoria = $Categoria;
 
@@ -175,14 +176,14 @@ class MangaList
     }
 
     /**
-     * @return Collection|CapitulosList[]
+     * @return Collection|Capitulo[]
      */
     public function getCapitulos(): Collection
     {
         return $this->Capitulos;
     }
 
-    public function addCapitulo(CapitulosList $capitulo): self
+    public function addCapitulo(Capitulo $capitulo): self
     {
         if (!$this->Capitulos->contains($capitulo)) {
             $this->Capitulos[] = $capitulo;
@@ -192,7 +193,7 @@ class MangaList
         return $this;
     }
 
-    public function removeCapitulo(CapitulosList $capitulo): self
+    public function removeCapitulo(Capitulo $capitulo): self
     {
         if ($this->Capitulos->contains($capitulo)) {
             $this->Capitulos->removeElement($capitulo);

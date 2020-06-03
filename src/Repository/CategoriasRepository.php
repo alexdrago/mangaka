@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\CapitulosList;
+use App\Entity\Categoria;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method CapitulosList|null find($id, $lockMode = null, $lockVersion = null)
- * @method CapitulosList|null findOneBy(array $criteria, array $orderBy = null)
- * @method CapitulosList[]    findAll()
- * @method CapitulosList[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Categoria|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Categoria|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Categoria[]    findAll()
+ * @method Categoria[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CapitulosListRepository extends ServiceEntityRepository
+class CategoriasRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CapitulosList::class);
+        parent::__construct($registry, Categoria::class);
     }
 
     // /**
-    //  * @return CapitulosList[] Returns an array of CapitulosList objects
+    //  * @return Categoria[] Returns an array of Categoria objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CapitulosListRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CapitulosList
+    public function findOneBySomeField($value): ?Categoria
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

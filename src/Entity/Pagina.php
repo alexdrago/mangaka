@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\MarcaPaginasRepository;
+use App\Repository\PaginaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass=MarcaPaginasRepository::class)
+ * @ORM\Entity(repositoryClass=PaginaRepository::class)
  */
-class MarcaPaginas
+class Pagina
 {
     /**
      * @ORM\Id()
@@ -20,13 +20,12 @@ class MarcaPaginas
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="blob")
      */
-    private $Usuario;
+    private $Imagen;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Capitulo::class)
+     * @ORM\ManyToOne(targetEntity=Capitulo::class, inversedBy="paginas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Capitulo;
@@ -36,14 +35,14 @@ class MarcaPaginas
         return $this->id;
     }
 
-    public function getUsuario(): ?User
+    public function getImagen()
     {
-        return $this->Usuario;
+        return $this->Imagen;
     }
 
-    public function setUsuario(?User $Usuario): self
+    public function setImagen($Imagen): self
     {
-        $this->Usuario = $Usuario;
+        $this->Imagen = $Imagen;
 
         return $this;
     }
