@@ -6,6 +6,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\MangaListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
@@ -70,6 +72,16 @@ class MangaList
      * @Groups({"manga_listado:read"})
      */
     private $Categoria;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CapitulosList::class, mappedBy="Manga", orphanRemoval=true)
+     */
+    private $Capitulos;
+
+    public function __construct()
+    {
+        $this->Capitulos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,6 +170,37 @@ class MangaList
     public function setCategoria(?CategoriasList $Categoria): self
     {
         $this->Categoria = $Categoria;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CapitulosList[]
+     */
+    public function getCapitulos(): Collection
+    {
+        return $this->Capitulos;
+    }
+
+    public function addCapitulo(CapitulosList $capitulo): self
+    {
+        if (!$this->Capitulos->contains($capitulo)) {
+            $this->Capitulos[] = $capitulo;
+            $capitulo->setManga($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCapitulo(CapitulosList $capitulo): self
+    {
+        if ($this->Capitulos->contains($capitulo)) {
+            $this->Capitulos->removeElement($capitulo);
+            // set the owning side to null (unless already changed)
+            if ($capitulo->getManga() === $this) {
+                $capitulo->setManga(null);
+            }
+        }
 
         return $this;
     }
