@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
@@ -56,6 +58,16 @@ class User implements UserInterface
      * @Assert\NotBlank()
      */
     private $username;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="User", orphanRemoval=true)
+     */
+    private $favoritos;
+
+    public function __construct()
+    {
+        $this->favoritos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +150,37 @@ class User implements UserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favoritos[]
+     */
+    public function getFavoritos(): Collection
+    {
+        return $this->favoritos;
+    }
+
+    public function addFavorito(Favoritos $favorito): self
+    {
+        if (!$this->favoritos->contains($favorito)) {
+            $this->favoritos[] = $favorito;
+            $favorito->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorito(Favoritos $favorito): self
+    {
+        if ($this->favoritos->contains($favorito)) {
+            $this->favoritos->removeElement($favorito);
+            // set the owning side to null (unless already changed)
+            if ($favorito->getUser() === $this) {
+                $favorito->setUser(null);
+            }
+        }
 
         return $this;
     }

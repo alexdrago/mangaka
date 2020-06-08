@@ -37,7 +37,7 @@ class Capitulo
     private $Nombre;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      * @Groups({"Capitulos_listado:write","Capitulos_listado:read"})
      */
     private $Fecha;

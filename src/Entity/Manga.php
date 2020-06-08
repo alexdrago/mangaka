@@ -60,9 +60,9 @@ class Manga
     private $Descripcion;
 
     /**
-     * Imagen de portada del manga
+     * Imagen de portada del manga en "base64"
      *
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="blob", nullable=true)
      * @Groups({"manga_listado:read","manga_listado:write"})
      */
     private $Portada;
@@ -79,9 +79,15 @@ class Manga
      */
     private $Capitulos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="Manga", orphanRemoval=true)
+     */
+    private $favoritos;
+
     public function __construct()
     {
         $this->Capitulos = new ArrayCollection();
+        $this->favoritos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +206,37 @@ class Manga
             // set the owning side to null (unless already changed)
             if ($capitulo->getManga() === $this) {
                 $capitulo->setManga(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favoritos[]
+     */
+    public function getFavoritos(): Collection
+    {
+        return $this->favoritos;
+    }
+
+    public function addFavorito(Favoritos $favorito): self
+    {
+        if (!$this->favoritos->contains($favorito)) {
+            $this->favoritos[] = $favorito;
+            $favorito->setManga($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorito(Favoritos $favorito): self
+    {
+        if ($this->favoritos->contains($favorito)) {
+            $this->favoritos->removeElement($favorito);
+            // set the owning side to null (unless already changed)
+            if ($favorito->getManga() === $this) {
+                $favorito->setManga(null);
             }
         }
 
