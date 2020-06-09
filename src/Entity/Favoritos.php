@@ -20,7 +20,7 @@ class Favoritos
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="favoritos")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favoritos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $User;
