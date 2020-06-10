@@ -3,14 +3,15 @@ import $ from 'jquery';
     var i=0;
     var dataImage = new Array();
     var dataPosition = new Array();
-
-    $("#images").change(function(){
+    console.log("hola");
+    $("#manga_Portada").change(function(){
+        console.log("adios");
         var checkImage = this.value;
         var ext = checkImage.substring(checkImage.lastIndexOf('.') + 1).toLowerCase();
         if (ext === "gif" || ext === "png" || ext === "jpg" || ext === "jpeg")
         {
             change(this);
-            var file = document.getElementById('images').files[0];
+            var file = document.getElementById('manga_Portada').files[0];
             dataImage[i]=file; //add push to array dataImage
             dataPosition[i]=i;  //add push position to dataPosition
             //created html progress
@@ -45,7 +46,7 @@ import $ from 'jquery';
         });
         $.ajax({
             type:'POST',
-            url:'http://localhost:8000/form/upload',
+            url:'http://mangaka.studio:8000/servicios/media_objects/',
             data:formData,
             contentType: false,
             dataType:'json',

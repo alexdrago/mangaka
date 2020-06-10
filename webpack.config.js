@@ -5,7 +5,7 @@ Encore
     // the project directory where all compiled assets will be stored
     .setOutputPath('public/build/')
 
-    // la ruta pública utilizada por el servidor web para acceder al directorio anterior
+    // the public path used by the web server to access the previous directory
     .setPublicPath('/build')
 
     .createSharedEntry('layout', './assets/js/layout.js')
@@ -13,7 +13,7 @@ Encore
     .addEntry('login', './assets/js/login.js')
 
     .enableBuildNotifications()
-    // arregla los módulos que esperan que jQuery sea global
+    // fixes modules that expect jQuery to be global
     .autoProvidejQuery()
 
     .addPlugin(new CopyWebpackPlugin([
