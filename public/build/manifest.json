@@ -15,7 +15,5 @@
   "build/layout.js": "/build/layout.js",
   "build/login.css": "/build/login.css",
   "build/login.js": "/build/login.js",
-  "build/manifest.js": "/build/manifest.js",
-  "build/rep_log.js": "/build/rep_log.js",
-  "build/rep_log_react.js": "/build/rep_log_react.js"
+  "build/manifest.js": "/build/manifest.js"
 }

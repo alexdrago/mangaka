@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\MangaRepository;
@@ -60,9 +61,10 @@ class Manga
     private $Descripcion;
 
     /**
-     * Imagen de portada del manga en "base64"
-     *
-     * @ORM\Column(type="blob", nullable=true)
+     * @var MediaObject|null
+     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @ORM\JoinColumn(nullable=true)
+     * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"manga_listado:read","manga_listado:write"})
      */
     private $Portada;
