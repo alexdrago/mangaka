@@ -7,7 +7,7 @@ import $ from 'jquery';
     $("#images").change(function(){
         var checkImage = this.value;
         var ext = checkImage.substring(checkImage.lastIndexOf('.') + 1).toLowerCase();
-        if (ext == "gif" || ext == "png" || ext == "jpg" || ext == "jpeg")
+        if (ext === "gif" || ext === "png" || ext === "jpg" || ext === "jpeg")
         {
             change(this);
             var file = document.getElementById('images').files[0];
@@ -19,7 +19,7 @@ import $ from 'jquery';
             i++;
         }
         else
-            alert("Please select image file (jpg, jpeg, png).")
+            alert("Por favor, seleccione el archivo de imagen (jpg, jpeg, png).")
     });
     var change = function(input){
         if (input.files && input.files[0]) {

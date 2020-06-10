@@ -16,7 +16,7 @@ $(document).ready(function() {
         $('.login-long-username-warning').remove();
 
         if ($usernameInput.val().length >= 20) {
-            const $warning = $('<div class="login-long-username-warning">This is a really long username - are you sure that is right?</div>');
+            const $warning = $('<div class="login-long-username-warning">Es un nombre de usuario muy largo, ¿estás seguro de que es correcto?</div>');
             $usernameInput.before($warning);
         }
     });
