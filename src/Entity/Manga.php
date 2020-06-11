@@ -61,13 +61,7 @@ class Manga
     private $Descripcion;
 
     /**
-     * @var MediaObject|null
-     * @ORM\ManyToOne(targetEntity=MediaObject::class)
-     * @ORM\JoinColumn(nullable=true)
-     * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"manga_listado:read","manga_listado:write"})
-     */
-    private $Portada;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="mangaLists")
@@ -85,6 +79,12 @@ class Manga
      * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="Manga", orphanRemoval=true)
      */
     private $favoritos;
+
+    /**
+     * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
+     * @Groups({"manga_listado:read","manga_listado:write"})
+     */
+    private $Portada;
 
     public function __construct()
     {
@@ -159,17 +159,6 @@ class Manga
         return substr($this->Descripcion, 0, 40).'...';
     }
 
-    public function getPortada(): ?string
-    {
-        return $this->Portada;
-    }
-
-    public function setPortada(?string $Portada): self
-    {
-        $this->Portada = $Portada;
-
-        return $this;
-    }
 
     public function getCategoria(): ?Categoria
     {
@@ -241,6 +230,18 @@ class Manga
                 $favorito->setManga(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPortada(): ?MediaObject
+    {
+        return $this->Portada;
+    }
+
+    public function setPortada(?MediaObject $Portada): self
+    {
+        $this->Portada = $Portada;
 
         return $this;
     }
