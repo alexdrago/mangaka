@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Mangaka" uploadOnCheckin="84fc15f1-c46b-4991-b97d-48729e47d58a">
+    <serverData>
+      <paths name="Mangaka">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/domains/mangaka.studio/public_html" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="Mangaka" />
+  </component>
+</project>

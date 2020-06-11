@@ -1,22 +1,42 @@
 security:
     encoders:
         App\Entity\User:
+<<<<<<< HEAD
             algorithm: argon2i
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
+=======
+            algorithm: bcrypt
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+>>>>>>> Api
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
+<<<<<<< HEAD
+=======
+        # used to reload user from session & other features (e.g. switch_user)
+>>>>>>> Api
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+<<<<<<< HEAD
             provider: app_user_provider
+=======
+            #provider: users_in_memory
+
+            json_login:
+                check_path: app_login
+                username_path: email
+                password_path: password
+>>>>>>> Api
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

@@ -2,6 +2,12 @@
 
 namespace App\Entity;
 
+<<<<<<< HEAD
+=======
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+>>>>>>> Api
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
@@ -33,6 +39,10 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
+<<<<<<< HEAD
+=======
+     * @ApiProperty(iri="http://schema.org/image")
+>>>>>>> Api
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -57,6 +67,19 @@ class User implements UserInterface
      */
     private $username;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="User", orphanRemoval=true)
+     */
+    private $favoritos;
+
+    public function __construct()
+    {
+        $this->favoritos = new ArrayCollection();
+    }
+
+>>>>>>> Api
     public function getId(): ?int
     {
         return $this->id;
@@ -141,4 +164,38 @@ class User implements UserInterface
 
         return $this;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * @return Collection|Favoritos[]
+     */
+    public function getFavoritos(): Collection
+    {
+        return $this->favoritos;
+    }
+
+    public function addFavorito(Favoritos $favorito): self
+    {
+        if (!$this->favoritos->contains($favorito)) {
+            $this->favoritos[] = $favorito;
+            $favorito->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorito(Favoritos $favorito): self
+    {
+        if ($this->favoritos->contains($favorito)) {
+            $this->favoritos->removeElement($favorito);
+            // set the owning side to null (unless already changed)
+            if ($favorito->getUser() === $this) {
+                $favorito->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+>>>>>>> Api
 }
