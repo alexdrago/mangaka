@@ -1,8 +1,5 @@
 api_platform:
     resource: .
     type: api_platform
-<<<<<<< HEAD
     prefix: /servicios
-=======
-    prefix: /servicios
->>>>>>> Api
+

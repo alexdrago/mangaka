@@ -245,4 +245,8 @@ class Manga
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->getNombre();
+    }
 }
