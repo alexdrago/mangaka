@@ -2,12 +2,9 @@
 
 namespace App\Entity;
 
-<<<<<<< HEAD
-=======
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
->>>>>>> Api
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
@@ -25,7 +22,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
-
  */
 class User implements UserInterface
 {
@@ -39,10 +35,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
-<<<<<<< HEAD
-=======
      * @ApiProperty(iri="http://schema.org/image")
->>>>>>> Api
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -67,8 +60,6 @@ class User implements UserInterface
      */
     private $username;
 
-<<<<<<< HEAD
-=======
     /**
      * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="User", orphanRemoval=true)
      */
@@ -79,7 +70,6 @@ class User implements UserInterface
         $this->favoritos = new ArrayCollection();
     }
 
->>>>>>> Api
     public function getId(): ?int
     {
         return $this->id;
@@ -164,8 +154,6 @@ class User implements UserInterface
 
         return $this;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * @return Collection|Favoritos[]
@@ -197,5 +185,4 @@ class User implements UserInterface
 
         return $this;
     }
->>>>>>> Api
 }

@@ -29,19 +29,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">No quedan mangas</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <a href="{{ path('manga_new') }}">Create new</a>
-{% endblock %}
-{% block javascripts %}
-    {#    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>#}
-    {#    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>#}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.0.5/es6-promise.auto.min.js"></script>
-    <script src="{{ asset('build/manifest.js') }}"></script>
-    <script src="{{ asset('build/layout.js') }}"></script>
-    <script src="{{ asset('build/UploadImg.js') }}"></script>
 {% endblock %}

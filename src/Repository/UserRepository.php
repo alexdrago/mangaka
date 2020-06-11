@@ -4,11 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-<<<<<<< HEAD
-use Doctrine\Common\Persistence\ManagerRegistry;
-=======
 use Doctrine\Persistence\ManagerRegistry;
->>>>>>> Api
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)

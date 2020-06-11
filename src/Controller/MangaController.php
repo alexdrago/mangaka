@@ -35,20 +35,6 @@ class MangaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $ficheroimagen = $form['ficheroimagen']->getData();
-            if($ficheroimagen)
-            {
-                $nombrearchivo=$ficheroimagen->getClientOriginalName();
-                $ficheroimagen->move($this->getParameter('directorio_imagenes'),
-                    $nombrearchivo);
-                $manga->setImagen($nombrearchivo);
-            }else{
-                $manga->setImagen("default.jpg");
-            }
-
-
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($manga);
             $entityManager->flush();
