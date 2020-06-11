@@ -1,9 +1,16 @@
 easy_admin:
+    site_name: 'Administracion Mangaka'
     entities:
 #        # List the entity class name you want to manage
-        - App\Entity\Manga
-        - App\Entity\Categoria
-        - App\Entity\Capitulo
-        - App\Entity\Pagina
-        - App\Entity\Favoritos
-        - App\Entity\MediaObject
+        Manga:
+            class: App\Entity\Manga
+        Categoria:
+            class: App\Entity\Categoria
+        Capitulo:
+            class: App\Entity\Capitulo
+        Pagina:
+            class: App\Entity\Pagina
+        Favoritos:
+            class: App\Entity\Favoritos
+        MediaObject:
+            class: App\Entity\MediaObject
