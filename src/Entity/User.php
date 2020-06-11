@@ -19,7 +19,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}}
  * )
- * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -35,7 +34,6 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
-     * @ApiProperty(iri="http://schema.org/image")
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -53,12 +51,7 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"user:read", "user:write"})
-     * @Assert\NotBlank()
-     */
-    private $username;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="User", orphanRemoval=true)
@@ -94,7 +87,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     /**
@@ -148,12 +141,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Favoritos[]
@@ -184,5 +171,9 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->getEmail();
     }
 }

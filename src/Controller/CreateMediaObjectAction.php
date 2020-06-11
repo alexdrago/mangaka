@@ -16,7 +16,7 @@ final class CreateMediaObjectAction
         }
 
         $mediaObject = new MediaObject();
-        $mediaObject->file = $uploadedFile;
+        $mediaObject->setFile($uploadedFile);
 
         return $mediaObject;
     }

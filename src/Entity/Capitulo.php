@@ -134,4 +134,5 @@ class Capitulo
     {
         return $this->getNombre();
     }
+
 }

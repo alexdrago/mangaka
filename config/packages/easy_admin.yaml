@@ -1,16 +1,49 @@
 easy_admin:
     site_name: 'Administracion Mangaka'
+    design:
+        brand_color: '#f00000'
+        assets:
+            favicon: '/assets/backend/favicon.png'
     entities:
-#        # List the entity class name you want to manage
         Manga:
             class: App\Entity\Manga
+            label: 'Mangas'
+            list:
+                title: "Lista de %%entity_label%%"
+                max_results: 30
+                fields:
+                    - 'Nombre'
+                    - 'Portada'
+                    - 'Autor'
+                    - 'Descripcion'
+                    - 'Capitulos'
+                    - 'favoritos'
+            form:
+                fields:
+                    - 'Nombre'
+                    - 'Portada'
+                    - 'Autor'
+                    - 'Descripcion'
+                    - 'Capitulos'
+            show:
+                title: '%%entity_label%% (#%%entity_id%%)'
         Categoria:
             class: App\Entity\Categoria
         Capitulo:
             class: App\Entity\Capitulo
+            form:
+                fields:
+                    - 'Nombre'
+                    - 'Manga'
+                    - 'paginas'
         Pagina:
             class: App\Entity\Pagina
         Favoritos:
             class: App\Entity\Favoritos
+        Usuarios:
+            class: App\Entity\User
         MediaObject:
             class: App\Entity\MediaObject
+            form:
+                fields:
+                    - { property: 'file', type: 'vich_image'}

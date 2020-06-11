@@ -26,7 +26,7 @@ class Favoritos
     private $User;
 
     /**
-     * @ORM\ManyToOne(targetEntity=manga::class, inversedBy="favoritos")
+     * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="favoritos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Manga;

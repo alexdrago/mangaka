@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
@@ -28,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     SearchFilter::class,
  *     properties={"Nombre":"partial",
  *     PropertyFilter::class})
+ *
  */
 class Manga
 {
@@ -60,8 +62,6 @@ class Manga
      */
     private $Descripcion;
 
-    /**
-
 
     /**
      * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="mangaLists")
@@ -83,6 +83,7 @@ class Manga
     /**
      * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @Groups({"manga_listado:read","manga_listado:write"})
+     *
      */
     private $Portada;
 

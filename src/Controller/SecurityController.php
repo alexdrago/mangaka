@@ -2,29 +2,28 @@
 
 namespace App\Controller;
 
-use ApiPlatform\Core\Api\IriConverterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login", methods={"POST"})
+     * @Route("/login", name="app_login")
      */
-    public function login(IriConverterInterface $iriConverter)
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->json([
-                'error' => 'Solicitud de acceso inválida: compruebe que el encabezado de Content-Type es "application/json".'
-            ], 400);
-        }
+         if ($this->getUser()) {
+             return $this->redirectToRoute('inicio');
+         }
 
-        return new Response(null, 204, [
-            'Location' => $iriConverter->getIriFromItem($this->getUser())
-        ]);
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -32,6 +31,6 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        throw new \Exception('should not be reached');
+        throw new \LogicException('Este método puede estar en blanco - será interceptado por la tecla de cierre de sesión de su cortafuegos.');
     }
 }
