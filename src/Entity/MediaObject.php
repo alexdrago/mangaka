@@ -63,7 +63,7 @@ class MediaObject
      * @var string|null
      *
      * @ApiProperty(iri="http://schema.org/contentUrl")
-     * @Groups({"media_object_read"})
+     * @Groups({"media_object_read","manga_listado:read","manga_listado:write"})
      */
     public $contentUrl;
 
@@ -85,5 +85,9 @@ class MediaObject
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function __toString()
+    {
+        return $this->filePath;
     }
 }
