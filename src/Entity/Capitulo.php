@@ -132,7 +132,7 @@ class Capitulo
     }
     public function __toString()
     {
-        return $this->getNombre();
+        return $this->getManga()." ".$this->getNombre();
     }
 
 }

@@ -6,7 +6,6 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PaginaRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ApiResource()
@@ -65,6 +64,6 @@ class Pagina
     }
     public function __toString()
     {
-        return $this->getId()."";
+        return $this->getId().$this->getCapitulo();
     }
 }

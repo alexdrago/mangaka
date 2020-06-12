@@ -1,37 +1,54 @@
 easy_admin:
-    site_name: 'Administracion Mangaka'
+
+    site_name: 'Administracion Mangaka Studio'
     design:
+        menu:
+            - { entity: 'Manga', label: 'Manga', icon: 'book' }
+            - { entity: 'Categoria', label: 'Categoria', icon: 'fas fa-atom' }
+            - { entity: 'Capitulo', label: 'Capitulo', icon: 'fas fa-copy' }
+            - { entity: 'Pagina', label: 'Pagina', icon: 'fas fa-file' }
+            - { entity: 'Usuarios', label: 'Usuarios', icon: 'user' }
+            - { entity: 'Favoritos', label: 'Favoritos', icon: 'fas fa-heart' }
+            - { entity: 'MediaObject', label: 'MediaObject', icon: 'image' }
+            - { entity: 'MarcaPaginas', label: 'MarcaPaginas', icon: 'fas fa-bookmark' }
         brand_color: '#f00000'
-        assets:
-            favicon: '/assets/backend/favicon.png'
+        form_theme:
+            - '@EasyAdmin/form/bootstrap_4.html.twig'
+            - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+            - '@VichUploader/Form/fields.html.twig'
     entities:
         Manga:
             class: App\Entity\Manga
-            label: 'Mangas'
+            label: 'Manga'
             list:
-                title: "Lista de %%entity_label%%"
+                title: "Lista de %%entity_label%%s"
                 max_results: 30
                 fields:
                     - 'Nombre'
                     - { property: 'Portada', type: 'image', base_path: '%media%' }
                     - 'Autor'
+                    - 'Categoria'
                     - 'Descripcion'
                     - 'Capitulos'
                     - 'favoritos'
+
             form:
+                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - 'Nombre'
-                    - { property: 'Portada', type: 'image', base_path: '%media%' }
+                    - 'Portada'
                     - 'Autor'
+                    - 'Categoria'
                     - 'Descripcion'
                     - 'Capitulos'
-            show:
-                title: '%%entity_label%% (#%%entity_id%%)'
+            new:
+                title: "Crear Manga"
         Categoria:
             class: App\Entity\Categoria
         Capitulo:
             class: App\Entity\Capitulo
             form:
+                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - 'Nombre'
                     - 'Manga'
@@ -47,6 +64,7 @@ easy_admin:
                     - { property: 'email', type: 'email' }
                     - { property: 'roles' }
             form:
+                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - { property: 'email', label: 'Email' }
                     - property: 'roles'
@@ -60,7 +78,11 @@ easy_admin:
             class: App\Entity\MediaObject
             list:
                 max_results: 15
-
             form:
+                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - { property: 'file', type: 'vich_image'}
+        MarcaPaginas:
+            class: App\Entity\MarcaPaginas
+            list:
+                max_results: 15

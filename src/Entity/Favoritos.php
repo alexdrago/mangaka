@@ -59,4 +59,11 @@ class Favoritos
 
         return $this;
     }
+    public function __toString()
+    {
+        $manga=$this->getManga()->__toString();
+        $User=$this->getUser()->__toString();
+
+        return $manga."❤".$User;
+    }
 }
