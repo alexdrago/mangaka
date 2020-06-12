@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %} Mangaka {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="{{ asset('css/Cards.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Si te gusta</div>
+                <div class="intro-heading">No dudes en contribuir al proyecto</div>
+                <a href="https://github.com/alexdrago/mangaka" class="page-scroll btn btn-xl">Git-Repo</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-content">
+        {% for manga in mangas %}
+            <div class="card"
+                 style=" background-image: url('{{  app.request.getBaseURL() }}{{asset('media/'~manga.getPortada())}}');
+                         background-size: 236px 350px;
+                         background-repeat: no-repeat;
+                 ">
+                <div class="content">
+                    <h2 class="title">{{ manga.getNombre() }}</h2>
+                    <p class="copy">{{ manga.getDescriptionCorta() }}</p>
+                    <a href="" class="btn">Ver</a>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

@@ -13,7 +13,7 @@ easy_admin:
                 max_results: 30
                 fields:
                     - 'Nombre'
-                    - 'Portada'
+                    - { property: 'Portada', type: 'image', base_path: '%media%' }
                     - 'Autor'
                     - 'Descripcion'
                     - 'Capitulos'
@@ -21,7 +21,7 @@ easy_admin:
             form:
                 fields:
                     - 'Nombre'
-                    - 'Portada'
+                    - { property: 'Portada', type: 'image', base_path: '%media%' }
                     - 'Autor'
                     - 'Descripcion'
                     - 'Capitulos'
@@ -42,8 +42,25 @@ easy_admin:
             class: App\Entity\Favoritos
         Usuarios:
             class: App\Entity\User
+            list:
+                fields:
+                    - { property: 'email', type: 'email' }
+                    - { property: 'roles' }
+            form:
+                fields:
+                    - { property: 'email', label: 'Email' }
+                    - property: 'roles'
+                      type: 'choice'
+                      type_options:
+                          expanded: true
+                          multiple: true
+                          choices: { Administrator: 'ROLE_ADMIN' }
+                    - { property: 'password', label: 'Password' }
         MediaObject:
             class: App\Entity\MediaObject
+            list:
+                max_results: 15
+
             form:
                 fields:
                     - { property: 'file', type: 'vich_image'}

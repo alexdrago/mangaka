@@ -141,6 +141,12 @@
     "jms/metadata": {
         "version": "2.3.0"
     },
+    "knplabs/knp-components": {
+        "version": "v2.3.5"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.2.0"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
     },
@@ -175,7 +181,7 @@
         "version": "v2.3.0"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.3"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
