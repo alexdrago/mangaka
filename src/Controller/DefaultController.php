@@ -24,7 +24,7 @@ class DefaultController extends AbstractController
                 ->findAll();
         }
 
-        $mangas=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),4); //paginamos
+        $mangas=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),8); //paginamos
 
         return $this->render('principal/index.html.twig',["mangas"=>$mangas]);
 /*       return $this->render('principal/index.html.twig');*/

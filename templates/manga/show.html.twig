@@ -1,34 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Manga{% endblock %}
+{% block title %}{{ manga.nombre }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/animeflv.css') }}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+{% endblock %}
 
 {% block body %}
-    <h1>Manga</h1>
+    <div class="Body">
+        <div>
+            <div class="Ficha fchlt">
+                <div class="Bg" style="background-image:url('{{asset('media/'~manga.getPortada())}}')"></div>
+                <div class="Container">
+                    <h1 class="Title">{{ manga.nombre }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ manga.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ manga.Nombre }}</td>
-            </tr>
-            <tr>
-                <th>Autor</th>
-                <td>{{ manga.Autor }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ manga.Descripcion }}</td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+            <div class="Container">
+                <div class="BX Row BFluid Sp20">
 
-    <a href="{{ path('manga_index') }}">back to list</a>
+                    <aside class="SidebarA BFixed">
+                        <div class="AnimeCover">
+                            <div class="Image">
+                                <figure><img src="{{asset('media/'~ manga.getPortada())}}" alt="{{manga.getPortada()}}"
+                                             itemprop="image"></figure>
+                            </div>
+                        </div>
+                        <p class="AnmStts A"><span class="fa-tv">Finalizado</span></p>
+                        <div id="add_pending"><a href="#"
+                                                 class="BtnNw Pndng BxSdw fa-bookmark"><span>LISTA DE ESPERA</span></a>
+                        </div>
+                        <div id="remove_pending" style="display: none;"><a href="#"
+                                                                           class="BtnNw Pndng BxSdw fa-times"><span>QUITAR DE ESPERA</span></a>
+                        </div>
 
-    <a href="{{ path('manga_edit', {'id': manga.id}) }}">edit</a>
+                    </aside>
 
-    {{ include('manga/_delete_form.html.twig') }}
+
+                    <main class="Main">
+
+                        <section class="WdgtCn">
+                            <div class="Top">
+                                <div class="Title">Sinopsis</div>
+                            </div>
+
+                            <div class="Description">
+                                <p>{{ manga.descripcion }}</p>
+                            </div>
+                            <div style="clear:both"></div>
+                        </section>
+
+
+                        <section class="WdgtCn">
+                            <div class="Top">
+                                <div class="Title">Lista de episodios</div>
+                            </div>
+
+                            <ul class="ListCaps" id="episodeList" style="max-height: 1000px; overflow-y: auto;">
+                                {% for capitulo in manga.capitulos %}
+                                <li><a href="{#TODO poner enlace#}">
+                                        <h3 class="Title">{{  capitulo.nombre }} </h3>
+                                        </a><label for="{{ capitulo.id }}" class="opivw">
+                                        <input id="{{ capitulo.id }}" class="mseen"  style="display: none;" type="checkbox"><span
+                                                class="Stts"><span>NO</span> VISTO</span></label></li>
+                                {% endfor %}
+
+                            </ul>
+                        </section>
+
+
+                    </main>
+
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

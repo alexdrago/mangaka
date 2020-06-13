@@ -1,39 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Manga index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/animeflv.css') }}" />
+{% endblock %}
+
 
 {% block body %}
-    <h1>Manga index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Autor</th>
-                <th>Descripcion</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <main class="page-content">
         {% for manga in mangas %}
-            <tr>
-                <td>{{ manga.id }}</td>
-                <td>{{ manga.Nombre }}</td>
-                <td>{{ manga.Autor }}</td>
-                <td>{{ manga.Descripcion }}</td>
-                <td>
-                    <a href="{{ path('manga_show', {'id': manga.id}) }}">show</a>
-                    <a href="{{ path('manga_edit', {'id': manga.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="card"
+                 style=" background-image: url('{{asset('media/'~manga.getPortada())}}');
+                         background-size: cover;
+                         background-repeat: no-repeat;
+                         ">
+                <div class="content">
+                    <h2 class="title">{{ manga.getNombre() }}</h2>
+                    <p class="copy">{{ manga.getDescriptionCorta() }}</p>
+                    <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn">Ver</a>
+                    {% if app.user %} {#Si el usuario no esta registrado#}
+                        <a class="btn"><i class="far fa-heart"
+                                          style="color: red;
+                                             font-size: 16px"></i></a>
+                    {% endif %}
 
-    <a href="{{ path('manga_new') }}">Create new</a>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+      {{ parent() }}
+
 {% endblock %}

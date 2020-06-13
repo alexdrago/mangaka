@@ -14,14 +14,11 @@ easy_admin:
         brand_color: '#f00000'
         form_theme:
             - '@EasyAdmin/form/bootstrap_4.html.twig'
-            - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
-            - '@VichUploader/Form/fields.html.twig'
     entities:
         Manga:
             class: App\Entity\Manga
             label: 'Manga'
             list:
-                title: "Lista de %%entity_label%%s"
                 max_results: 30
                 fields:
                     - 'Nombre'
@@ -31,9 +28,7 @@ easy_admin:
                     - 'Descripcion'
                     - 'Capitulos'
                     - 'favoritos'
-
             form:
-                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - 'Nombre'
                     - 'Portada'
@@ -45,10 +40,13 @@ easy_admin:
                 title: "Crear Manga"
         Categoria:
             class: App\Entity\Categoria
+            form:
+                fields:
+                    - 'Nombre'
+                    - 'Decripcion'
         Capitulo:
             class: App\Entity\Capitulo
             form:
-                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - 'Nombre'
                     - 'Manga'
@@ -64,7 +62,6 @@ easy_admin:
                     - { property: 'email', type: 'email' }
                     - { property: 'roles' }
             form:
-                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - { property: 'email', label: 'Email' }
                     - property: 'roles'
@@ -79,7 +76,6 @@ easy_admin:
             list:
                 max_results: 15
             form:
-                title: 'Modificar %%entity_label%% (#%%entity_id%%)'
                 fields:
                     - { property: 'file', type: 'vich_image'}
         MarcaPaginas:

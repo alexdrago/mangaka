@@ -11,8 +11,6 @@
 <div class="wrapper">
     <div class="container">
         <form method="post" class="form">
-
-
             {% if app.user %}
                 <div class="mb-3">
                     Ya estas logeado como {{ app.user.username }}, <a href="{{ path('app_logout') }}">Deslogear</a>
@@ -21,15 +19,18 @@
             {% if not app.user %}
 
                 <h1 class="h3 mb-3 font-weight-normal">Por favor identificate</h1>
-                <label for="inputEmail">Username</label><input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+                <label for="inputEmail">Username</label><input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Username" required>
                 <label for="inputPassword">Password</label><input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
-                <button class="btn btn-lg btn-primary" type="submit">
+                <button class="btn btn-outline-dark" type="submit">
                     Enviar
                 </button>
+                <br/>
+                <a class="btn btn-outline-dark" href="{{ path('app_register') }}" role="button">Registrate</a>
+
             {% endif %}
         </form>
     </div>
