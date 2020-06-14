@@ -71,17 +71,54 @@
     {% block javascripts %}
         {{ parent() }}
         <script src="{{ asset('js/jquery.blueimp-gallery.min.js') }}"></script>
+
+        {#TODO Arreglar la subida multiple#}
+
+        {% set existe = 0 %}
+        {% for marca in app.user.marcaPagina %}
+            <script>console.log({{ capitulo.id }})</script>
+            {% if marca.capitulo.id==capitulo.id %}
+             {% set existe = 1 %}
+            {% endif %}
+        {% endfor %}
+
+
+            {% if existe==0 %}
+                <script>
+                    let user = ("servicios/users/" + {{ app.user.id }});
+                    let cap = ("servicios/capitulos/" + {{ capitulo.id }});
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        async: false,
+                        url: "/servicios/marca_paginas",
+                        data: JSON.stringify({
+                            "usuario": user,
+                            "capitulo": cap
+                        }),
+                        complete: function (data) {
+                        }
+                    });
+                </script>
+            {% endif %}
+
+
+
+
+
+
         <script>
             document.getElementById('links').onclick = function (event) {
                 event = event || window.event
                 var target = event.target || event.srcElement
                 var link = target.src ? target.parentNode : target
-                var options = { index: link, event: event }
+                var options = {index: link, event: event}
                 var links = this.getElementsByTagName('a')
                 blueimp.Gallery(links, options)
             }
 
         </script>
+
 
     {% endblock %}
 

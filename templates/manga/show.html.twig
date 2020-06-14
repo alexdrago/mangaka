@@ -29,13 +29,13 @@
                                              itemprop="image"></figure>
                             </div>
                         </div>
-
+                         {% if app.user %}
                         <div id="segir"><a href="#" class="BtnNw Pndng BxSdw "><span><i class="fas fa-heart"></i></span></a>
                         </div>
                         <div id="dejarSeguir" style="display: none"><a href="#" class="BtnNw Pndng BxSdw"><span><i
                                             class="far fa-heart"></i></span></a>
                         </div>
-
+                        {% endif %}
                     </aside>
 
 
@@ -59,7 +59,7 @@
 
                             <ul class="ListCaps" id="episodeList" style="max-height: 1000px; overflow-y: auto;">
                                 {% for capitulo in manga.capitulos %}
-                                    <li value="{{ capitulo.id }}"><a href="{#TODO poner enlace#}">
+                                    <li value="{{ capitulo.id }}"><a href="{{ path('capitulo_show', {'id': capitulo.id}) }}">
                                             <h3 class="Title">{{ capitulo.nombre }} </h3>
                                         </a><label for="{{ capitulo.id }}" class="opivw">
                                             <input id="{{ capitulo.id }}" class="mseen" style="display: none;" type="checkbox"><span class="Stts"><span>NO</span> VISTO</span></label></li>
@@ -90,7 +90,7 @@
             var usuario =
                 $.ajax({
                     type: "GET",
-                    url: "https://127.0.0.1:8000/servicios/users/{{ app.user.id }}",
+                    url: "/servicios/users/{{ app.user.id }}",
                     dataType: 'json'
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -111,33 +111,20 @@
             var paginas =
                 $.ajax({
                     type: "GET",
-                    url: "https://127.0.0.1:8000/servicios/marca_paginas?Usuario={{ app.user.id }}",
+                    url: "/servicios/marca_paginas?usuario={{ app.user.id }}",
                     dataType: 'json'
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown);
                 }).done(function (datos) {
                         for (var key in datos) {
-                        let Capis=datos[key].Capitulo.id;
+                            debugger
+                            let Capis=datos[key].capitulo.id;
                             if (Contiene(Capis,Capitulos)) {
                                 $("#"+Capis).attr("checked", "checked");
                         }
                         }
                     }
                 );
-
-            function segir() {
-            // TODO Hacer la peticion de ajax
-            }
-
-            function Nosegir() {
-                // TODO Hacer la peticion de ajax
-            }
-
-
-
-
-
-
 
 
             function Contiene(value, arr) {
@@ -153,8 +140,6 @@
 
                 return result;
             }
-
-
         </script>
     {% endif %}
 {% endblock %}

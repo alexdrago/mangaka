@@ -60,9 +60,15 @@ class Capitulo
      */
     private $paginas;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MarcaPagina::class, mappedBy="capitulo", orphanRemoval=true)
+     */
+    private $marcaPaginas;
+
     public function __construct()
     {
         $this->paginas = new ArrayCollection();
+        $this->marcaPaginas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,6 +145,37 @@ class Capitulo
     public function __toString()
     {
         return $this->getManga()." ".$this->getNombre();
+    }
+
+    /**
+     * @return Collection|MarcaPagina[]
+     */
+    public function getMarcaPaginas(): Collection
+    {
+        return $this->marcaPaginas;
+    }
+
+    public function addMarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if (!$this->marcaPaginas->contains($marcaPagina)) {
+            $this->marcaPaginas[] = $marcaPagina;
+            $marcaPagina->setCapitulo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if ($this->marcaPaginas->contains($marcaPagina)) {
+            $this->marcaPaginas->removeElement($marcaPagina);
+            // set the owning side to null (unless already changed)
+            if ($marcaPagina->getCapitulo() === $this) {
+                $marcaPagina->setCapitulo(null);
+            }
+        }
+
+        return $this;
     }
 
 }

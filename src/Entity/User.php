@@ -59,9 +59,15 @@ class User implements UserInterface
      */
     private $favoritos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MarcaPagina::class, mappedBy="usuario", orphanRemoval=true)
+     */
+    private $marcaPagina;
+
     public function __construct()
     {
         $this->favoritos = new ArrayCollection();
+        $this->marcaPagina = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,5 +182,36 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getEmail();
+    }
+
+    /**
+     * @return Collection|MarcaPagina[]
+     */
+    public function getmarcaPagina(): Collection
+    {
+        return $this->marcaPagina;
+    }
+
+    public function addmarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if (!$this->marcaPagina->contains($marcaPagina)) {
+            $this->marcaPagina[] = $marcaPagina;
+            $marcaPagina->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removemarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if ($this->marcaPagina->contains($marcaPagina)) {
+            $this->marcaPagina->removeElement($marcaPagina);
+            // set the owning side to null (unless already changed)
+            if ($marcaPagina->getUsuario() === $this) {
+                $marcaPagina->setUsuario(null);
+            }
+        }
+
+        return $this;
     }
 }

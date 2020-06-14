@@ -32,6 +32,28 @@ class MangaRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    /**
+     * @return Manga[] Returns an array of Manga objects order by value
+     */
+    public function Actualizados()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder()
+            ->select('m')->
+            from('App\Entity\Manga', 'm')
+            ->innerJoin('m.Capitulos', 'c')
+            ->where('c.Manga = m.id')
+            ->orderBy("c.Fecha","DESC");
+
+
+
+
+        $consulta=$qb->getQuery();
+
+        return $consulta->execute();
+    }
+
+
 
 
     /*

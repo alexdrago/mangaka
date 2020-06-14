@@ -3,12 +3,21 @@
 {% block title %}Manga index{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Cards.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/animeflv.css') }}" />
 {% endblock %}
 
 
 {% block body %}
-    <main class="page-content">
+    </div>
+    <section class="WdgtCn">
+        <div class="page-content">
+            <h2 class="Title Title-Fch" style="margin-top: 90px;">Todos:</h2>
+        </div>
+        <div style="clear:both"></div>
+    </section>
+    <div class="page-content">
+
         {% for manga in mangas %}
             <div class="card"
                  style=" background-image: url('{{asset('media/'~manga.getPortada())}}');
@@ -18,7 +27,7 @@
                 <div class="content">
                     <h2 class="title">{{ manga.getNombre() }}</h2>
                     <p class="copy">{{ manga.getDescriptionCorta() }}</p>
-                    <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn">Ver</a>
+                    <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn" style="font-size: 16px">Ver</a>
                     {% if app.user %} {#Si el usuario no esta registrado#}
                         <a class="btn"><i class="far fa-heart"
                                           style="color: red;
@@ -28,9 +37,14 @@
                 </div>
             </div>
         {% endfor %}
-    </main>
+
+    </div>
+    <div class="navigation page-content ">
+        {{ knp_pagination_render(mangas) }}
+    </div>
 
 {% endblock %}
+
 
 {% block javascripts %}
       {{ parent() }}

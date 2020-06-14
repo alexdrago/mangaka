@@ -21,12 +21,24 @@ class DefaultController extends AbstractController
 
             $allMangas = $this->getDoctrine()
                 ->getRepository(Manga::class)
-                ->findAll();
+                ->findAllOrd('id');
+
+
         }
 
-        $mangas=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),8); //paginamos
+        $mangas=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),10); //paginamos
 
-        return $this->render('principal/index.html.twig',["mangas"=>$mangas]);
+
+        $mangasActualizados=null; //Mangas a mostrar
+
+            $allMangas = $this->getDoctrine()
+                ->getRepository(Manga::class)
+                ->Actualizados();
+
+
+        $mangasActualizados=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),10); //paginamos
+
+        return $this->render('principal/index.html.twig',["mangas"=>$mangas,"Actualizados"=>$mangasActualizados]);
 /*       return $this->render('principal/index.html.twig');*/
     }
 }
