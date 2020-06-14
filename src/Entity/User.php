@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,6 +27,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user:read", "MarPag_listado:read", "Fav_listado:read"})
      */
     private $id;
 
@@ -54,6 +54,7 @@ class User implements UserInterface
 
 
     /**
+     * @Groups({"user:read", "user:write"})
      * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="User", orphanRemoval=true)
      */
     private $favoritos;

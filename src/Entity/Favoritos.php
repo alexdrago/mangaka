@@ -5,10 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\FavoritosRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"Fav_listado:read"},"swagger_definition_name"="Lectura"},
+ *     denormalizationContext={"groups"={"Fav_listado:write"},"swagger_definition_name"="Escritura"})
  * @ORM\Entity(repositoryClass=FavoritosRepository::class)
+ *
  */
 class Favoritos
 {
@@ -28,6 +33,7 @@ class Favoritos
     /**
      * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="favoritos")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user:read"})
      */
     private $Manga;
 

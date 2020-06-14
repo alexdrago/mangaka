@@ -20,8 +20,9 @@ class MangaController extends AbstractController
      */
     public function index(MangaRepository $mangaRepository): Response
     {
+        $mangas = $mangaRepository->findAllOrd('id');
         return $this->render('manga/index.html.twig', [
-            'mangas' => $mangaRepository->findAll(),
+            'mangas' => arsort($mangas)
         ]);
     }
 

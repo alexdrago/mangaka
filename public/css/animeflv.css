@@ -167,28 +167,7 @@ body ::-webkit-scrollbar {
         background:#fff!important
     }
 }
-a[class*=fa-],
-span[class*=fa-],
-strong[class*=fa-],
-i[class*=fa-] {
-    display:inline-block
-}
-[class*=fa-]:before {
-    display:inline-block;
-    font-family:FontAwesome;
-    font-style:normal!important;
-    font-weight:400!important;
-    font-size:inherit;
-    line-height:inherit;
-    text-rendering:geometricPrecision;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    vertical-align:top;
-    margin-right:10px
-}
-[class*=fa-]:empty:before {
-    margin-right:0
-}
+
 body {
     font-size:15px;
     line-height:20px
@@ -5054,12 +5033,12 @@ button.StylB:hover,
 }
 .LoMasVisto .ListSdbr>li:first-child>a:before {
     font-size:40px;
-    color:#ffc107;
+    color:red;
     opacity:1
 }
 .LoMasVisto .ListSdbr>li:first-child>a:after {
     content:'1';
-    color:#ffc107;
+    color:red;
     position:absolute;
     left:15px;
     top:0;
@@ -6067,7 +6046,7 @@ a.bttwtr {
 }
 .Msj.Wrn a,
 .Msj.Wrn:before {
-    color:#ffc107
+    color:red
 }
 .Msj.Err {
     background-color:rgba(251,52,71,.1)
@@ -6387,10 +6366,10 @@ a.bttwtr {
     height:30px;
     width:30px;
     line-height:28px;
-    color:#ffc107;
+    color:red;
     border-radius:15px;
     text-align:center;
-    border:1px solid #ffc107;
+    border:1px solid red;
     position:absolute;
     left:0;
     top:0
@@ -6514,7 +6493,7 @@ a.bttwtr {
     background-color:#d500f9
 }
 .BtnNw {
-    background-color:#fff;
+    background-color: #d82828;
     border-radius:5px;
     position:relative;
     padding:13px 10px 13px 50px;
@@ -6566,20 +6545,27 @@ a.bttwtr {
     box-shadow:inset 0 0 0 1px #14bbf0
 }
 .BtnNw.Pndng {
-    line-height:24px;
+    line-height:35px;
     text-align:center;
     padding-left:0;
-    padding-right:0
+    padding-right:0;
+    font-size:25px;
+    color: white;
+}
+#dejarSeguir a:hover {
+    font-size: 15px;
 }
 .BtnNw.Pndng:hover {
-    color:#ffc107
+    font-size: 35px;
 }
+
+
 .BtnNw.Pndng:before {
-    color:#ffc107;
-    box-shadow:inset 0 0 0 1px #ffc107
+    color:red;
+    box-shadow:inset 0 0 0 1px red
 }
 .BtnNw.Pndng:hover:before {
-    background-color:#ffc107;
+    background-color:red;
     color:#fff
 }
 .BtnNw.Rcmndr {
@@ -6659,7 +6645,7 @@ a.AnmQv {
     padding-left:3px
 }
 a.Pndnt {
-    background-color:#ffc107
+    background-color:red
 }
 .CpsHvr>li:hover {
     z-index:5
@@ -6717,7 +6703,7 @@ a.Pndnt {
     vertical-align:top;
     text-align:center;
     font-size:15px;
-    color:#ffc107;
+    color:red;
     cursor:pointer
 }
 .ChngVw>span+span,
@@ -6725,7 +6711,7 @@ a.Pndnt {
     color:#fff
 }
 .LstStylPs.show .ChngVw>span+span {
-    color:#ffc107
+    color:red
 }
 .NvCnAnm {
     text-align:center
@@ -6763,7 +6749,7 @@ a.Pndnt {
     color:#fb3447
 }
 .ListAnTbNvTp>li>a.fa-bookmark:before {
-    color:#ffc107
+    color:red
 }
 .ListAnTbNvTp a {
     border-radius:3px 3px 0 0;
@@ -6881,7 +6867,7 @@ a.Pndnt {
 }
 .Brdcrmb i {
     font-size:12px;
-    color:#ffc107;
+    color:red;
     padding:0 5px;
     line-height:22px;
     height:20px;
@@ -6990,7 +6976,7 @@ a.CapNvNx {
 a.CapNvLs {
     width:50px;
     font-size:15px;
-    color:#ffc107;
+    color:red;
     text-align:center
 }
 a.CapNvLs {
@@ -7068,7 +7054,7 @@ a.CapNvLs:last-child {
 }
 .NwBxCn figure span {
     line-height:20px;
-    background-color:#ffc107;
+    background-color:red;
     position:absolute;
     left:-2px;
     bottom:-2px;
@@ -7188,7 +7174,7 @@ a.CapNvLs:last-child {
 }
 .NtxtCp:before {
     font-size:20px;
-    color:#ffc107;
+    color:red;
     position:absolute;
     width:45px;
     line-height:50px;
