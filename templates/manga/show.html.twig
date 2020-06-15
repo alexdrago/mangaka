@@ -68,11 +68,8 @@
                                                    type="checkbox"><span
                                                     class="Stts"><span>NO</span> VISTO</span></label></li>
                                 {% endfor %}
-
                             </ul>
                         </section>
-
-
                     </main>
 
                 </div>
@@ -97,7 +94,8 @@
             /*Programamos los botonos de seguir y de dejar de seguir*/
             $("#segir").on({
                 'click': function (event) {
-
+                    $("#segir").css({"display": "none"});
+                    $("#dejarSeguir").css({visibility: "visible"});
                     $.ajax({
                         type: "POST",
                         contentType: "application/json",
@@ -108,8 +106,8 @@
                             "Manga": "/servicios/mangas/"+idManga
                         }),
                         complete: function (data) {
-                            depurar=data;
-                            console.log(data)
+                            $("#segir").css({"display": "none"});
+                            $("#dejarSeguir").css({visibility: "visible"});
                         }
                     });
 

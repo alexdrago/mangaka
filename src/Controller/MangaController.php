@@ -21,7 +21,7 @@ class MangaController extends AbstractController
     public function index(PaginatorInterface $paginator,MangaRepository $mangaRepository,Request $request): Response
     {
         $allMangas = $mangaRepository->findAll();
-        $mangas=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),4); //paginamos
+        $mangas=$paginator->paginate($allMangas,$request->query->getInt("pagina",1),10); //paginamos
 
         return $this->render('manga/index.html.twig', [
             'mangas' => $mangas,

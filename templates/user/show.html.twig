@@ -58,27 +58,22 @@
                     </section>
                     <section class="WdgtCn">
                         <div class="Top">
-                            <div class="Title">Mangas que Leo</div>
+                            <div class="Title">Historial de episodios vistos</div>
                         </div>
-                        <ul class="ListAnimes AX Rows A06 C04 D03">
-                            {% for macapagina in user.marcaPagina %}
-                            <li>
-                                <article class="Anime alt">
 
-                                    <div class="Image">
-                                        <figure><img src="{{ asset('media/'~ macapagina.capitulo.manga.portada) }}" alt=""></figure>
-                                        <span class="Type tv">{{ macapagina.capitulo.manga.categoria }}</span>
-                                        <div class="Description">
-                                            <div class="Title"><strong><a href="{{ path('manga_show', {'id': macapagina.capitulo.manga.getId()}) }} ">{{ macapagina.capitulo.manga.nombre }}</a></strong>
-                                            </div>
-                                            <p>{{ macapagina.capitulo.manga.descripcion }}</p>
-                                        </div>
-                                    </div>
-                                    <h3 class="Title"><a href="{{ path('manga_show', {'id': macapagina.capitulo.manga.getId()}) }}">{{ macapagina.capitulo.manga.nombre }}</a></h3>
-                                </article>
-                            </li>
+                        <ul class="ListCaps" id="episodeList" style="max-height: 1000px; overflow-y: auto;">
+                            {% for marcaPag in user.marcaPagina %}
+                                <li value="{{ marcaPag.capitulo.id }}"><a
+                                            href="{{ path('capitulo_show', {'id': marcaPag.capitulo.id}) }}">
+                                        <h3 class="Title">{{ marcaPag.capitulo.manga.nombre }} </h3>
+                                        <p> {{  marcaPag.capitulo.nombre }}</p>
+                                    </a>
+                                    <label for="{{ marcaPag.capitulo.id }}" class="opivw">
+                                        </label>
+                                </li>
                             {% endfor %}
                         </ul>
+
                     </section>
                 </main>
             </div>
