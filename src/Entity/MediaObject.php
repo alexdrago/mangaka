@@ -8,7 +8,6 @@ use App\Controller\CreateMediaObjectAction;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -68,12 +67,11 @@ class MediaObject
     public $contentUrl;
 
     /**
-     * @var File|null
-     *
-     * @Assert\NotNull(groups={"media_object_create"})
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
+     * @var File
+     *
      */
-    public $file;
+    private $file;
 
     /**
      * @var string|null
@@ -89,5 +87,22 @@ class MediaObject
     public function __toString()
     {
         return $this->filePath;
+    }
+    public function setFile(File $image = null)
+    {
+        $this->file = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->filePath = $image->getFilename();
+        }
+    }
+
+    public function getFile()
+    {
+        return $this->file;
     }
 }

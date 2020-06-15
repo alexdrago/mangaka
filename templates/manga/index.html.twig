@@ -1,39 +1,54 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Manga index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Cards.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/Manga.css') }}" />
+{% endblock %}
+
 
 {% block body %}
-    <h1>Manga index</h1>
+    </div>
+    <section class="WdgtCn">
+        <div class="page-content">
+            <h2 class="Title Title-Fch" style="margin-top: 90px;">Todos:</h2>
+        </div>
+        <div style="clear:both"></div>
+    </section>
+    <div class="page-content">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Autor</th>
-                <th>Descripcion</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
         {% for manga in mangas %}
-            <tr>
-                <td>{{ manga.id }}</td>
-                <td>{{ manga.Nombre }}</td>
-                <td>{{ manga.Autor }}</td>
-                <td>{{ manga.Descripcion }}</td>
-                <td>
-                    <a href="{{ path('manga_show', {'id': manga.id}) }}">show</a>
-                    <a href="{{ path('manga_edit', {'id': manga.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="card"
+                 style=" background-image: url('{{asset('media/'~manga.getPortada())}}');
+                         background-size: cover;
+                         background-repeat: no-repeat;
+                         ">
+                <div class="content">
+                    <h2 class="title">{{ manga.getNombre() }}</h2>
+                    <p class="copy">{{ manga.getDescriptionCorta() }}</p>
+                    <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn" style="font-size: 16px">Ver</a>
+                {#TODO implementrar un feedback de si el manga esta siendo seguido#}
 
-    <a href="{{ path('manga_new') }}">Create new</a>
+                 {#   {% if app.user %} #}{#Si el usuario no esta registrado#}{#
+                        <a class="btn"><i class="far fa-heart"
+                                          style="color: red;
+                                             font-size: 16px"></i></a>
+                    {% endif %}#}
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+    <div class="navigation page-content ">
+        {{ knp_pagination_render(mangas) }}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+      {{ parent() }}
+
 {% endblock %}

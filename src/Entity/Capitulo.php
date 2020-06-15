@@ -27,12 +27,17 @@ class Capitulo
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({
+     *     "Capitulos_listado:write","Capitulos_listado:read",
+     *     "Fav_listado:read","MarPag_listado:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"manga_listado:read","Capitulos_listado:write","Capitulos_listado:read"})
+     * @Groups({"manga_listado:read",
+     *     "Capitulos_listado:write","Capitulos_listado:read",
+     *     "Fav_listado:read","Fav_listado:write"})
      */
     private $Nombre;
 
@@ -51,12 +56,19 @@ class Capitulo
 
     /**
      * @ORM\OneToMany(targetEntity=Pagina::class, mappedBy="Capitulo", orphanRemoval=true)
+     * @Groups({"Capitulos_listado:write","Capitulos_listado:read"})
      */
     private $paginas;
+
+    /**
+     * @ORM\OneToMany(targetEntity=MarcaPagina::class, mappedBy="capitulo", orphanRemoval=true)
+     */
+    private $marcaPaginas;
 
     public function __construct()
     {
         $this->paginas = new ArrayCollection();
+        $this->marcaPaginas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +144,38 @@ class Capitulo
     }
     public function __toString()
     {
-        return $this->getNombre();
+        return $this->getManga()." ".$this->getNombre();
     }
+
+    /**
+     * @return Collection|MarcaPagina[]
+     */
+    public function getMarcaPaginas(): Collection
+    {
+        return $this->marcaPaginas;
+    }
+
+    public function addMarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if (!$this->marcaPaginas->contains($marcaPagina)) {
+            $this->marcaPaginas[] = $marcaPagina;
+            $marcaPagina->setCapitulo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if ($this->marcaPaginas->contains($marcaPagina)) {
+            $this->marcaPaginas->removeElement($marcaPagina);
+            // set the owning side to null (unless already changed)
+            if ($marcaPagina->getCapitulo() === $this) {
+                $marcaPagina->setCapitulo(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

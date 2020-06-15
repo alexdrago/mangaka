@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,7 +18,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}}
  * )
- * @UniqueEntity(fields={"username"})
  * @UniqueEntity(fields={"email"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -29,13 +27,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user:read", "MarPag_listado:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
-     * @ApiProperty(iri="http://schema.org/image")
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -53,21 +51,23 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"user:read", "user:write"})
-     * @Assert\NotBlank()
-     */
-    private $username;
+
 
     /**
+     * @Groups({"user:read", "user:write"})
      * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="User", orphanRemoval=true)
      */
     private $favoritos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MarcaPagina::class, mappedBy="usuario", orphanRemoval=true)
+     */
+    private $marcaPagina;
+
     public function __construct()
     {
         $this->favoritos = new ArrayCollection();
+        $this->marcaPagina = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,7 +94,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     /**
@@ -148,12 +148,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Favoritos[]
@@ -180,6 +174,41 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($favorito->getUser() === $this) {
                 $favorito->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return Collection|MarcaPagina[]
+     */
+    public function getmarcaPagina(): Collection
+    {
+        return $this->marcaPagina;
+    }
+
+    public function addmarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if (!$this->marcaPagina->contains($marcaPagina)) {
+            $this->marcaPagina[] = $marcaPagina;
+            $marcaPagina->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removemarcaPagina(MarcaPagina $marcaPagina): self
+    {
+        if ($this->marcaPagina->contains($marcaPagina)) {
+            $this->marcaPagina->removeElement($marcaPagina);
+            // set the owning side to null (unless already changed)
+            if ($marcaPagina->getUsuario() === $this) {
+                $marcaPagina->setUsuario(null);
             }
         }
 

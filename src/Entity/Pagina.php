@@ -6,8 +6,6 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PaginaRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource()
@@ -63,5 +61,9 @@ class Pagina
         $this->Capitulo = $Capitulo;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->getId().$this->getCapitulo();
     }
 }

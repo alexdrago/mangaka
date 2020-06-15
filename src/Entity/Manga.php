@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\Repository\MangaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,6 +27,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     SearchFilter::class,
  *     properties={"Nombre":"partial",
  *     PropertyFilter::class})
+ *
  */
 class Manga
 {
@@ -35,7 +35,7 @@ class Manga
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"manga_listado:read"})
+     * @Groups({"manga_listado:read","user:read"})
      */
     private $id;
 
@@ -56,11 +56,9 @@ class Manga
     /**
      * Descripcion del manga.
      * @Groups({"manga_listado:read"})
-     * @ORM\Column(type="string", length=400, nullable=true)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $Descripcion;
-
-    /**
 
 
     /**
@@ -83,6 +81,7 @@ class Manga
     /**
      * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @Groups({"manga_listado:read","manga_listado:write"})
+     *
      */
     private $Portada;
 
@@ -154,7 +153,7 @@ class Manga
     public function getDescriptionCorta(): string
     {
         if (strlen($this->Descripcion) < 40) {
-            return $this->Descripcion;
+            return $this->Descripcion."";
         }
         return substr($this->Descripcion, 0, 40).'...';
     }

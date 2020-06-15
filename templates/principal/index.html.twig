@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% block title %} Mangaka {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Cards.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/Manga.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        <div class="container">
+            <div class="intro-text">
+{#
+                <div class="intro-lead-in">¿Te esta gustando?</div>
+#}
+                <div class="intro-heading">No dudes en contribuir al proyecto</div>
+                <a href="https://github.com/alexdrago/mangaka" class="page-scroll btn btn-xl">Git-Repo</a>
+            </div>
+        </div>
+    </header>
+    <section class="WdgtCn">
+        <div class="page-content">
+            <h2 class="Title Title-Fch">Los ultimos:</h2>
+        </div>
+        <div style="clear:both"></div>
+    </section>
+    <div class="page-content">
+
+        {% for manga in mangas %}
+            <div class="card"
+                 style=" background-image: url('{{asset('media/'~manga.getPortada())}}');
+                         background-size: cover;
+                         background-repeat: no-repeat;
+                 ">
+                <div class="content">
+                    <h2 class="title">{{ manga.getNombre() }}</h2>
+                    <p class="copy">{{ manga.getDescriptionCorta() }}</p>
+                    <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn" style="font-size: 16px">Ver</a>
+                    {% if app.user %} {#Si el usuario no esta registrado#}
+                        <a class="btn"><i class="far fa-heart"
+                                          style="color: red;
+                                             font-size: 16px"></i></a>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <section class="WdgtCn">
+        <div class="page-content">
+            <h2 class="Title Title-Fch">Actualizados Recientemente:</h2>
+        </div>
+        <div style="clear:both"></div>
+    </section>
+    <div class="page-content">
+
+        {% for manga in Actualizados %}
+            <div class="card"
+                 style=" background-image: url('{{asset('media/'~manga.getPortada())}}');
+                         background-size: cover;
+                         background-repeat: no-repeat;
+                 ">
+                <div class="content">
+                    <h2 class="title">{{ manga.getNombre() }}</h2>
+                    <p class="copy">{{ manga.getDescriptionCorta() }}</p>
+                    <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn" style="font-size: 16px">Ver</a>
+                    {% if app.user %} {#Si el usuario no esta registrado#}
+                        <a class="btn"><i class="far fa-heart"
+                                          style="color: red;
+                                             font-size: 16px"></i></a>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
