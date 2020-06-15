@@ -6,6 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\FavoritosRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
+
 
 
 /**
@@ -13,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"Fav_listado:read"},"swagger_definition_name"="Lectura"},
  *     denormalizationContext={"groups"={"Fav_listado:write"},"swagger_definition_name"="Escritura"})
  * @ORM\Entity(repositoryClass=FavoritosRepository::class)
+ * @ApiFilter(SearchFilter::class,properties={"usuario":"exact",})
  *
  */
 class Favoritos
@@ -21,19 +25,22 @@ class Favoritos
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favoritos")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"Fav_listado:read","Fav_listado:write"})
+
      */
     private $User;
 
     /**
      * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="favoritos")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user:read"})
+     * @Groups({"user:read","user:write","Fav_listado:read","Fav_listado:write"})
      */
     private $Manga;
 

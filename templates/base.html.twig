@@ -45,19 +45,28 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="">
-                        <a class="page-scroll" href="#services">Mangas</a>
+                        <a class="page-scroll" href="{{ path('manga_index') }}">Mangas</a>
                     </li>
-                    <li class="">
+                   {# TODO hacer una vista para que nos los odene por fav
+
+                   <li class="">
                         <a class="page-scroll" href="#portfolio">Top Favoritos</a>
-                    </li>
+                    </li>#}
                     {% if not app.user %} {#Si el usuario no esta registrado#}
+
                         <li class="">
                             <a class="page-scroll" href="{{ path('app_login') }}"><i class="fa fa-user"></i> Identificate</a>
-                        </li><!-- end login -->
+                        </li>
+
                     {% elseif app.user %}
+
+                        <li class="">
+                            <a class="page-scroll" href="{{ path('user_show', {'id': app.user.id} ) }}"><i class="fa fa-user"></i> Perfil</a>
+                        </li>
+
                         <li class="">
                             <a class="page-scroll" href="{{ path('app_logout') }}"><i class="fa fa-user-times"></i> Salir</a>
-                        </li><!-- end login -->
+                        </li>
                     {% endif %}
                 </ul>
             </div>

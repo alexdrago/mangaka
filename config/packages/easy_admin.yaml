@@ -1,6 +1,6 @@
 easy_admin:
 
-    site_name: 'Administracion Mangaka Studio'
+    site_name: '<img src="https://mangaka.studio/img/android-chrome-192x192.png"/>'
     design:
         menu:
             - { entity: 'Manga', label: 'Manga', icon: 'book' }
@@ -10,7 +10,7 @@ easy_admin:
             - { entity: 'Usuarios', label: 'Usuarios', icon: 'user' }
             - { entity: 'Favoritos', label: 'Favoritos', icon: 'fas fa-heart' }
             - { entity: 'MediaObject', label: 'MediaObject', icon: 'image' }
-            - { entity: 'MarcaPaginas', label: 'MarcaPaginas', icon: 'fas fa-bookmark' }
+            - { entity: 'MarcaPagina', label: 'MarcaPagina', icon: 'fas fa-bookmark' }
         brand_color: '#f00000'
         form_theme:
             - '@EasyAdmin/form/bootstrap_4.html.twig'
@@ -78,7 +78,7 @@ easy_admin:
             form:
                 fields:
                     - { property: 'file', type: 'vich_image'}
-        MarcaPaginas:
-            class: App\Entity\MarcaPaginas
+        MarcaPagina:
+            class: App\Entity\MarcaPagina
             list:
                 max_results: 15

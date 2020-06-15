@@ -29,12 +29,13 @@
                                              itemprop="image"></figure>
                             </div>
                         </div>
-                         {% if app.user %}
-                        <div id="segir"><a href="#" class="BtnNw Pndng BxSdw "><span><i class="fas fa-heart"></i></span></a>
-                        </div>
-                        <div id="dejarSeguir" style="display: none"><a href="#" class="BtnNw Pndng BxSdw"><span><i
-                                            class="far fa-heart"></i></span></a>
-                        </div>
+                        {% if app.user %}
+                            <div id="segir"><a href="#" class="BtnNw Pndng BxSdw "><span><i
+                                                class="fas fa-heart"></i></span></a>
+                            </div>
+                            <div id="dejarSeguir" style="display: none"><a href="#" class="BtnNw Pndng BxSdw"><span><i
+                                                class="far fa-heart"></i></span></a>
+                            </div>
                         {% endif %}
                     </aside>
 
@@ -59,10 +60,13 @@
 
                             <ul class="ListCaps" id="episodeList" style="max-height: 1000px; overflow-y: auto;">
                                 {% for capitulo in manga.capitulos %}
-                                    <li value="{{ capitulo.id }}"><a href="{{ path('capitulo_show', {'id': capitulo.id}) }}">
+                                    <li value="{{ capitulo.id }}"><a
+                                                href="{{ path('capitulo_show', {'id': capitulo.id}) }}">
                                             <h3 class="Title">{{ capitulo.nombre }} </h3>
                                         </a><label for="{{ capitulo.id }}" class="opivw">
-                                            <input id="{{ capitulo.id }}" class="mseen" style="display: none;" type="checkbox"><span class="Stts"><span>NO</span> VISTO</span></label></li>
+                                            <input id="{{ capitulo.id }}" class="mseen" style="display: none;"
+                                                   type="checkbox"><span
+                                                    class="Stts"><span>NO</span> VISTO</span></label></li>
                                 {% endfor %}
 
                             </ul>
@@ -81,65 +85,69 @@
     {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    {#
-        Guardamos la id del user
-    #}
+
     {% if app.user %}
         <script>
             var idManga ={{ manga.id }};
-            var usuario =
-                $.ajax({
-                    type: "GET",
-                    url: "/servicios/users/{{ app.user.id }}",
-                    dataType: 'json'
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }).done(function (datos) {
-                        let Fav = datos.favoritos;
-                        for (var key in Fav) {
-
-                            if (Fav[key].Manga.id === idManga) {
-                                $("#segir").css({"display": "none"});
-                                $("#dejarSeguir").show();
-                            }
-                        }
-                    }
-                );
-
             let Capitulos = $("ul.ListCaps li");
 
-            var paginas =
-                $.ajax({
-                    type: "GET",
-                    url: "/servicios/marca_paginas?usuario={{ app.user.id }}",
-                    dataType: 'json'
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }).done(function (datos) {
-                        for (var key in datos) {
-                            debugger
-                            let Capis=datos[key].capitulo.id;
-                            if (Contiene(Capis,Capitulos)) {
-                                $("#"+Capis).attr("checked", "checked");
+            /*Programamos los botonos de seguir y de dejar de seguir*/
+            $("#segir").on({
+                'click': function () {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        async: false,
+                        url: "/servicios/marca_paginas",
+                        data: JSON.stringify({
+                            "usuario": user,
+                            "capitulo": cap
+                        }),
+                        complete: function (data) {
                         }
+                    });
+
+                }
+            });
+            $("#dejarSeguir").show();
+
+
+            /*Cambiamos los botones de estado si lo esta siguiedo/*/
+            $.ajax({
+                type: "GET",
+                url: "/servicios/users/{{ app.user.id }}",
+                dataType: 'json'
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }).done(function (datos) {
+                    let Fav = datos.favoritos;
+                    for (var key in Fav) {
+                        if (Fav[key].Manga.id === idManga) {
+                            $("#segir").css({"display": "none"});
+                            $("#dejarSeguir").show();
                         }
-                    }
-                );
-
-
-            function Contiene(value, arr) {
-                var result = false;
-
-                for (var i = 0; i < arr.length; i++) {
-                    var name = arr[i].value;
-                    if (name === value) {
-                        result = true;
-                        break;
                     }
                 }
+            );
 
-                return result;
-            }
+            $.ajax({
+                type: "GET",
+                url: "/servicios/marca_paginas?usuario={{ app.user.id }}",
+                dataType: 'json'
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }).done(function (datos) {
+                    for (var key in datos) {
+                        debugger
+                        let Capis = datos[key].capitulo.id;
+                        if (Contiene(Capis, Capitulos)) {
+                            $("#" + Capis).attr("checked", "checked");
+                        }
+                    }
+                }
+            );
+
+
         </script>
     {% endif %}
 {% endblock %}

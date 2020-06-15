@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} usuario {{ user.email }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/animeflv.css') }}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="Body">
+        <div class="Container">
+            <div class="BX Row BFluid Sp20">
+
+                <aside class="SidebarA BFixed">
+                    <div class="Wdgt User">
+                        <div class="Avatar">
+                            <div class="Bg" style="background-image:url({{ asset('img/user.bmp') }})"></div>
+                            <figure><a href="#"><img src="url({{ asset('img/user.bmp') }}" alt=""></a></figure>
+                            <div class="Name">{{ user.email }}</div>
+
+                        </div>
+                    </div>
+                </aside>
+
+
+                <main class="Main">
+                    <section class="WdgtCn">
+                        <div class="Top">
+                            <div class="Title">Animes favoritos</div>
+                        </div>
+                        <ul class="ListAnimes AX Rows A06 C04 D03">
+                            {% for fav in user.favoritos %}
+
+                            <li>
+                                <article class="Anime alt">
+                                    <a href="#" class="RmvFv fa-heart"></a>
+
+                                    <div class="Image">
+                                        <figure><img src="{{ asset('media/'~ fav.manga.getPortada()) }}" alt=""></figure>
+                                        <span class="Type tv">{{ fav.manga.categoria }}</span>
+                                        <div class="Description">
+                                            <div class="Title"><strong><a href="{{ path('manga_show', {'id': fav.manga.getId()}) }} ">{{ fav.manga.nombre }}</a></strong>
+                                            </div>
+
+                                            <p>{{ fav.manga.descripcion }}</p>
+                                        </div>
+                                    </div>
+                                    <h3 class="Title"><a href="{{ path('manga_show', {'id': fav.manga.getId()}) }}">{{ fav.manga.nombre }}</a></h3>
+                                </article>
+                            </li>
+
+                        {% endfor %}
+
+                        </ul>
+                        <a href="/perfil/alexdrago/favoritos" class="Button StylC ShwMr Alt">Ver todos</a>
+                    </section>
+                    <section class="WdgtCn">
+                        <div class="Top">
+                            <div class="Title">Animes que veo</div>
+                        </div>
+                        <ul class="ListAnimes AX Rows A06 C04 D03">
+                            <li>
+                                <article class="Anime alt">
+                                    <a href="#" class="AnmQv fa-play"></a>
+                                    <span class="Estreno"><span>ESTRENO</span></span>
+                                    <div class="Image">
+                                        <figure><img src="/uploads/animes/covers/3249.jpg" alt=""></figure>
+                                        <span class="Type tv">ANIME</span>
+                                        <div class="Description">
+                                            <div class="Title"><strong><a href="/anime/plunderer">Plunderer</a></strong>
+                                            </div>
+                                            <div class="Vts fa-star">4.44817</div>
+                                            <p>Es el año 305 en el calendario Alciano, y el mundo está controlado por
+                                                los números. Cada humano nace con un “Count”, que podría indicar
+                                                cualquier cosa, desde el número de kilómetros que te suman por caminar o
+                                                algo tan arbitrario como las veces que otras personas han degustado tu
+                                                comida.
+                                                No importa lo que signifique, pero si el “Count” llega a cero… ¡serás
+                                                mandado al Abyss! Después de que el Count de la madre de Hina llegara a
+                                                cero, su última petición para Hina fue para que buscara al legendario
+                                                As.</p>
+                                        </div>
+                                    </div>
+                                    <h3 class="Title"><a href="/anime/plunderer">Plunderer</a></h3>
+                                </article>
+                            </li>
+                        </ul>
+                        <a href="/perfil/alexdrago/siguiendo" class="Button StylC ShwMr Alt">Ver todos</a>
+                    </section>
+                    <section class="WdgtCn">
+                        <div class="Top">
+                            <div class="Title">Animes que pienso ver</div>
+                        </div>
+                        <p class="Norslts fa-meh-o">Todavía no haz agregado ninguna serie</p>
+                    </section>
+                </main>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+
+{% endblock %}

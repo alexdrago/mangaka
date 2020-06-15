@@ -15,3 +15,17 @@ $(function() {
 $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
+
+function Contiene(value, arr) {
+    var result = false;
+
+    for (var i = 0; i < arr.length; i++) {
+        var name = arr[i].value;
+        if (name === value) {
+            result = true;
+            break;
+        }
+    }
+
+    return result;
+}
