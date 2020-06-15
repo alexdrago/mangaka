@@ -3,7 +3,7 @@
 {% block title %}{{ manga.nombre }}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/animeflv.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/Manga.css') }}"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
           integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
 {% endblock %}
@@ -30,11 +30,11 @@
                             </div>
                         </div>
                         {% if app.user %}
-                            <div id="segir"><a href="#" class="BtnNw Pndng BxSdw "><span><i
+                            <div id="segir" value="{{ manga.id }}"><a href="#" class="BtnNw Pndng BxSdw "><span><i
                                                 class="fas fa-heart"></i></span></a>
                             </div>
-                            <div id="dejarSeguir" style="display: none"><a href="#" class="BtnNw Pndng BxSdw"><span><i
-                                                class="far fa-heart"></i></span></a>
+                            <div id="dejarSeguir"  style=" visibility: hidden "><a href="#" class="BtnNw Pndng BxSdw"><span>
+                                        <i class="far fa-heart"></i></span></a>
                             </div>
                         {% endif %}
                     </aside>
@@ -89,28 +89,32 @@
     {% if app.user %}
         <script>
             var idManga ={{ manga.id }};
+            var user= {{ app.user.id }};
+
             let Capitulos = $("ul.ListCaps li");
+            var depurar;
 
             /*Programamos los botonos de seguir y de dejar de seguir*/
             $("#segir").on({
-                'click': function () {
+                'click': function (event) {
+
                     $.ajax({
                         type: "POST",
                         contentType: "application/json",
                         async: false,
-                        url: "/servicios/marca_paginas",
+                        url: "/servicios/favoritos",
                         data: JSON.stringify({
-                            "usuario": user,
-                            "capitulo": cap
+                            "User": "/servicios/users/"+user,
+                            "Manga": "/servicios/mangas/"+idManga
                         }),
                         complete: function (data) {
+                            depurar=data;
+                            console.log(data)
                         }
                     });
 
                 }
             });
-            $("#dejarSeguir").show();
-
 
             /*Cambiamos los botones de estado si lo esta siguiedo/*/
             $.ajax({
@@ -124,7 +128,7 @@
                     for (var key in Fav) {
                         if (Fav[key].Manga.id === idManga) {
                             $("#segir").css({"display": "none"});
-                            $("#dejarSeguir").show();
+                            $("#dejarSeguir").css({visibility: "visible"});
                         }
                     }
                 }
@@ -138,7 +142,6 @@
                 console.log(errorThrown);
             }).done(function (datos) {
                     for (var key in datos) {
-                        debugger
                         let Capis = datos[key].capitulo.id;
                         if (Contiene(Capis, Capitulos)) {
                             $("#" + Capis).attr("checked", "checked");

@@ -35,7 +35,7 @@ class Manga
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"Fav_listado:read","manga_listado:read","user:read"})
+     * @Groups({"manga_listado:read","user:read"})
      */
     private $id;
 
