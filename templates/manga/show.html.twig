@@ -33,7 +33,7 @@
                             <div id="segir" value="{{ manga.id }}"><a href="#" class="BtnNw Pndng BxSdw "><span><i
                                                 class="fas fa-heart"></i></span></a>
                             </div>
-                            <div id="dejarSeguir"  style=" visibility: hidden "><a href="#" class="BtnNw Pndng BxSdw"><span>
+                            <div id="dejarSeguir"  style=" display: none "><a href="#" class="BtnNw Pndng BxSdw"><span>
                                         <i class="far fa-heart"></i></span></a>
                             </div>
                         {% endif %}
@@ -85,36 +85,13 @@
 
     {% if app.user %}
         <script>
-            var idManga ={{ manga.id }};
-            var user= {{ app.user.id }};
+            const idManga ={{ manga.id }};
+            const user = {{ app.user.id }};
 
             let Capitulos = $("ul.ListCaps li");
-            var depurar;
 
-            /*Programamos los botonos de seguir y de dejar de seguir*/
-            $("#segir").on({
-                'click': function (event) {
-                    $("#segir").css({"display": "none"});
-                    $("#dejarSeguir").css({visibility: "visible"});
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        async: false,
-                        url: "/servicios/favoritos",
-                        data: JSON.stringify({
-                            "User": "/servicios/users/"+user,
-                            "Manga": "/servicios/mangas/"+idManga
-                        }),
-                        complete: function (data) {
-                            $("#segir").css({"display": "none"});
-                            $("#dejarSeguir").css({visibility: "visible"});
-                        }
-                    });
 
-                }
-            });
-
-            /*Cambiamos los botones de estado si lo esta siguiedo/*/
+            /*Cambiamos los botones de estado si lo esta siguiedo*/
             $.ajax({
                 type: "GET",
                 url: "/servicios/users/{{ app.user.id }}",
@@ -122,15 +99,68 @@
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
             }).done(function (datos) {
-                    let Fav = datos.favoritos;
-                    for (var key in Fav) {
-                        if (Fav[key].Manga.id === idManga) {
-                            $("#segir").css({"display": "none"});
-                            $("#dejarSeguir").css({visibility: "visible"});
+                    let mangasFav = datos.favoritos;
+                    //Recorremos todos los fav
+                    for (var key in mangasFav) {
+                        debugger
+                        // buscamos en los fav el que tenga el id del manga
+                        if (mangasFav[key].Manga.id === idManga) {
+                            debugger
+                            $("#segir").css({display :"none"});
+                            $("#dejarSeguir").css({display: "block"});
+
+                            //le asignamos el id del fav para poder borrarlo
+                            $("#dejarSeguir").attr("value",mangasFav[key].id);
                         }
                     }
                 }
             );
+
+
+            /*Evento del click en seguir */
+            $("#segir").on({
+                'click': function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        async: false,
+                        url: "/servicios/favoritos",
+                        data: JSON.stringify({
+                            "User": "/servicios/users/" + user,
+                            "Manga": "/servicios/mangas/" + idManga
+                        }),
+                        complete: function (data) {
+                            $("#segir").css({display :"none"});
+                            $("#dejarSeguir").css({display: "block"});
+
+                        }
+                    });
+                }
+            });
+
+
+            /*Evento del click en dejar de segir */
+            $("#dejarSeguir").on({
+                'click': function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        type: "DELETE",
+                        contentType: "application/json",
+                        async: false,
+                        url: "/servicios/favoritos",
+                        data: JSON.stringify({
+                            "id":  $("#dejarSeguir").val()
+                        }),
+                        complete: function (data) {
+                            $("#dejarSeguir").css({display :"none"});
+                            $("#segir").css({display: "block"});
+
+                        }
+                    });
+                }
+            });
+
 
             $.ajax({
                 type: "GET",

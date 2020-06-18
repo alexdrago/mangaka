@@ -15,8 +15,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource(
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get", "put", "delete"},
+ *
  *     normalizationContext={"groups"={"manga_listado:read"},"swagger_definition_name"="Lectura"},
  *     denormalizationContext={"groups"={"manga_listado:write"},"swagger_definition_name"="Escritura"},
+ *
  *     shortName="Mangas",
  *     attributes={
  *          "pagination_items_per_page"=10
@@ -32,6 +36,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class Manga
 {
     /**
+     * Idenficador del manga
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -41,12 +47,15 @@ class Manga
 
     /**
      * Nombre del manga
+     *
+     * Nombre del manga
      * @ORM\Column(type="string", length=255)
      * @Groups({"manga_listado:read","manga_listado:write","Categoria_listado:read"})
      */
     private $Nombre;
 
     /**
+     *
      * Autor del manga
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"manga_listado:read","manga_listado:write"})
@@ -54,6 +63,7 @@ class Manga
     private $Autor;
 
     /**
+     *
      * Descripcion del manga.
      * @Groups({"manga_listado:read"})
      * @ORM\Column(type="string", length=1000, nullable=true)
@@ -62,23 +72,27 @@ class Manga
 
 
     /**
+     * Categoria a la que pertenece el manga
      * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="mangaLists")
      * @Groups({"manga_listado:read"})
      */
     private $Categoria;
 
     /**
+     * Coleccion de Capitulos que forman el manga
      * @ORM\OneToMany(targetEntity=Capitulo::class, mappedBy="Manga", orphanRemoval=true)
      * @Groups({"manga_listado:read"})
      */
     private $Capitulos;
 
     /**
+     * Los marcadores de favoritos que he recibido
      * @ORM\OneToMany(targetEntity=Favoritos::class, mappedBy="Manga", orphanRemoval=true)
      */
     private $favoritos;
 
     /**
+     * Portada del manga
      * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @Groups({"manga_listado:read","manga_listado:write"})
      *
@@ -153,9 +167,9 @@ class Manga
     public function getDescriptionCorta(): string
     {
         if (strlen($this->Descripcion) < 40) {
-            return $this->Descripcion."";
+            return $this->Descripcion . "";
         }
-        return substr($this->Descripcion, 0, 40).'...';
+        return substr($this->Descripcion, 0, 40) . '...';
     }
 
 
@@ -208,6 +222,20 @@ class Manga
     public function getFavoritos(): Collection
     {
         return $this->favoritos;
+    }
+    /**
+     * Busca dentro del manga si un usuario lo tiene en favoritos. Si lo encuentra devuelve el id y si no un 0.
+     * @return int
+     */
+
+    public function userIsLiked(int $idUsuario): ?int
+    {
+        foreach ($this->favoritos as $favor) {
+            if ($favor->getUsuario()->id == $idUsuario) {
+                return $favor->getId();
+            }
+        }
+        return 0;
     }
 
     public function addFavorito(Favoritos $favorito): self

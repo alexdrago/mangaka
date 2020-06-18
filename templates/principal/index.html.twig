@@ -66,11 +66,11 @@
                     <h2 class="title">{{ manga.getNombre() }}</h2>
                     <p class="copy">{{ manga.getDescriptionCorta() }}</p>
                     <a href="{{ path('manga_show', {'id': manga.getId()}) }}" class="btn" style="font-size: 16px">Ver</a>
-                    {% if app.user %} {#Si el usuario no esta registrado#}
+                  {#  {% if app.user %} #}{#Si el usuario no esta registrado#}{#
                         <a class="btn"><i class="far fa-heart"
                                           style="color: red;
                                              font-size: 16px"></i></a>
-                    {% endif %}
+                    {% endif %}#}
 
                 </div>
             </div>

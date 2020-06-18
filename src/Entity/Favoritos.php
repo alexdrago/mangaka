@@ -13,10 +13,12 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get", "put", "delete"={"method"="DELETE"}},
  *     normalizationContext={"groups"={"Fav_listado:read"},"swagger_definition_name"="Lectura"},
  *     denormalizationContext={"groups"={"Fav_listado:write"},"swagger_definition_name"="Escritura"})
  * @ORM\Entity(repositoryClass=FavoritosRepository::class)
- * @ApiFilter(SearchFilter::class,properties={"usuario":"exact",})
+ * @ApiFilter(SearchFilter::class,properties={"usuario":"exact"})
  *
  */
 class Favoritos
@@ -25,7 +27,7 @@ class Favoritos
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     *
+     * @groups({"user:read","Fav_listado:read"})
      */
     private $id;
 
