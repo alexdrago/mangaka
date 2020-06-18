@@ -30,12 +30,22 @@
                             </div>
                         </div>
                         {% if app.user %}
-                            <div id="segir" value="{{ manga.id }}"><a href="#" class="BtnNw Pndng BxSdw "><span><i
-                                                class="fas fa-heart"></i></span></a>
+                            <div id="segir" value="{{ manga.id }}">
+                                <a href="#" class="BtnNw Pndng BxSdw ">
+                                    <span>
+                                        <i class="fas fa-heart"></i>
+                                    </span>
+                                </a>
                             </div>
-                            <div id="dejarSeguir"  style=" display: none "><a href="#" class="BtnNw Pndng BxSdw"><span>
-                                        <i class="far fa-heart"></i></span></a>
+                            <div id="dejarSeguir" style=" display: none ">
+                                <a href="#" class="BtnNw Pndng BxSdw">
+                                    <span>
+                                        <i class="far fa-heart"></i>
+                                    </span>
+                                </a>
                             </div>
+                            <input id="idfav" style=" display: none ">
+                            </input>
                         {% endif %}
                     </aside>
 
@@ -102,15 +112,15 @@
                     let mangasFav = datos.favoritos;
                     //Recorremos todos los fav
                     for (var key in mangasFav) {
-                        debugger
+
                         // buscamos en los fav el que tenga el id del manga
                         if (mangasFav[key].Manga.id === idManga) {
-                            debugger
-                            $("#segir").css({display :"none"});
+
+                            $("#segir").css({display: "none"});
                             $("#dejarSeguir").css({display: "block"});
 
                             //le asignamos el id del fav para poder borrarlo
-                            $("#dejarSeguir").attr("value",mangasFav[key].id);
+                            $("#idfav").attr("value", mangasFav[key].id);
                         }
                     }
                 }
@@ -144,16 +154,15 @@
             $("#dejarSeguir").on({
                 'click': function (event) {
                     event.preventDefault();
+                    let url = "/servicios/favoritos/" + $("#idfav").val();
+                    debugger
                     $.ajax({
+                        url: url,
                         type: "DELETE",
                         contentType: "application/json",
                         async: false,
-                        url: "/servicios/favoritos",
-                        data: JSON.stringify({
-                            "id":  $("#dejarSeguir").val()
-                        }),
                         complete: function (data) {
-                            $("#dejarSeguir").css({display :"none"});
+                            $("#dejarSeguir").css({display: "none"});
                             $("#segir").css({display: "block"});
 
                         }
